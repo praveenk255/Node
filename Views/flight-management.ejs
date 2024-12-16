@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Data Management</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Flight Data Management</h1>
+    <a href="/" class="btn btn-secondary">Back</a>
+
+    <form action="/add-flight" method="post">
+      <h2>Add/Edit Flight</h2>
+      <input type="text" name="flightNumber" placeholder="Flight Number" required>
+      <input type="text" name="std" placeholder="STD" required>
+      <input type="text" name="sta" placeholder="STA" required>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <h2>Existing Flights</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Flight Number</th>
+          <th>STD</th>
+          <th>STA</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% flights.forEach(flight => { %>
+          <tr>
+            <td><%= flight.flightNumber %></td>
+            <td><%= flight.std %></td>
+            <td><%= flight.sta %></td>
+            <td>
+              <form action="/delete-flight" method="post" style="display: inline;">
+                <input type="hidden" name="flightNumber" value="<%= flight.flightNumber %>">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <h2>Upload Excel</h2>
+    <form action="/upload-excel" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".csv" required>
+      <button type="submit" class="btn btn-success">Upload</button>
+    </form>
+  </div>
+</body>
+</html>
